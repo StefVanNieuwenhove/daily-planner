@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/components/ui/theme-provider';
 import { ClerkProvider } from '@clerk/nextjs';
 import { Footer, Navbar } from '@/components';
 import { Separator } from '@/components/ui/separator';
+import { isLoggedIn } from '@/lib/auth';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -27,7 +28,7 @@ export default function RootLayout({
             defaultTheme='system'
             enableSystem
             disableTransitionOnChange>
-            <Navbar />
+            <Navbar isLoggedIn={isLoggedIn()} />
             <main className='container w-full h-screen'>{children}</main>
             <Separator />
             <footer className='bottom-0 w-full flex items-center justify-center gap-4 py-4'>

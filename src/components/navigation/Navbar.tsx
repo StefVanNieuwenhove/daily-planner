@@ -22,9 +22,13 @@ import {
 import { useState } from 'react';
 import { MenuIcon } from 'lucide-react';
 
-const Navbar = () => {
+type NavbarProps = {
+  isLoggedIn: boolean;
+};
+
+const Navbar = ({ isLoggedIn }: NavbarProps) => {
   const [open, setOpen] = useState(false);
-  const { isSignedIn, session } = useSession();
+  const { session } = useSession();
   return (
     <>
       <header className='sticky top-0 z-50 flex h-16 w-full items-center justify-between bg-base-100 px-4 py-2 backdrop-saturate-180 backdrop-blur-xl'>
@@ -53,7 +57,7 @@ const Navbar = () => {
                       Home
                     </Button>
                   </Link>
-                  {isSignedIn && (
+                  {isLoggedIn && (
                     <Link href={'/planner'}>
                       <Button variant={'link'} onClick={() => setOpen(false)}>
                         My Planner
@@ -87,7 +91,7 @@ const Navbar = () => {
                 </Button>
               </NavigationMenuLink>
             </NavigationMenuItem>
-            {isSignedIn && (
+            {isLoggedIn && (
               <NavigationMenuItem>
                 <NavigationMenuLink href='/planner'>
                   <Button
@@ -115,7 +119,7 @@ const Navbar = () => {
           </NavigationMenuList>
         </NavigationMenu>
         <div className='flex items-center gap-4'>
-          {isSignedIn ? (
+          {isLoggedIn ? (
             <UserButton />
           ) : (
             <Button
