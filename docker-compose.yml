@@ -3,7 +3,7 @@ services:
   scouts-db:
     image: postgres
     restart: always
-    container_name: template-db
+    container_name: daily-planner-db
     ports:
       - 5432:5432
     environment:
