@@ -5,3 +5,11 @@
 - [ ] forgot password page
 - [ ] reset password page
 - [ ] planner page
+
+
+# components
+- [x] navbar with 
+    - [x] theme toggle
+    - [x] sign in button
+    - [x] sign up button    
+    - [ ] links: home, planner, pricing, contact
