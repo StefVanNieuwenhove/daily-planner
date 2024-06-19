@@ -1,7 +1,7 @@
 # overview pages
 - [ ] home page
-- [ ] sign in page
-- [ ] sign up page
+- [x] sign in page
+- [x] sign up page
 - [ ] forgot password page
 - [ ] reset password page
-
+- [ ] planner page
