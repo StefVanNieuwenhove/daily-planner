@@ -1,10 +1,18 @@
 # overview pages
-- [ ] home page
-- [x] sign in page
-- [x] sign up page
-- [ ] forgot password page
-- [ ] reset password page
-- [ ] planner page
+- [x] home page
+- [x] pricing page
+- [x] planner page
+- [x] contact page
+- [x] sign-in page
+- [x] sign-up page
+- [x] user-profile page
+
+# Planner page
+- [x] overview planner => sidebar
+- [ ] add planner
+- [ ] add task
+- [ ] edit task
+- [ ] delete task
 
 
 # components
@@ -12,4 +20,9 @@
     - [x] theme toggle
     - [x] sign in button
     - [x] sign up button    
-    - [ ] links: home, planner, pricing, contact
+    - [x] links: home, planner, pricing, contact
+
+- [ ] footer
+    - [ ] links: about, privacy, terms
+    - [ ] social links
+    - [x] copyright and deverloper info

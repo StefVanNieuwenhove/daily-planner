@@ -29,7 +29,9 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange>
             <Navbar isLoggedIn={isLoggedIn()} />
-            <main className='container w-full h-screen'>{children}</main>
+            <main className='container flex gap-2 w-full h-screen p-2'>
+              {children}
+            </main>
             <Separator />
             <footer className='bottom-0 w-full flex items-center justify-center gap-4 py-4'>
               <Footer />

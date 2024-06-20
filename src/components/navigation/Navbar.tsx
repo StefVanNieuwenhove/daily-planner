@@ -79,7 +79,7 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
             </SheetContent>
           </Sheet>
         </span>
-        <h1 className='text-xl font-bold text-base-content text-center underline uppercase'>
+        <h1 className='text-xl font-bold text-base-content text-center uppercase'>
           Daily Planner
         </h1>
         <NavigationMenu className='hidden md:flex'>
