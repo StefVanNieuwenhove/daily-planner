@@ -16,6 +16,7 @@ import {
 } from '../ui/form';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
+import { toast } from 'sonner';
 
 type AddPlannerFormProps = {
   handleSubmit: (name: string) => void;
@@ -30,8 +31,12 @@ const AddPlannerForm = ({ handleSubmit }: AddPlannerFormProps) => {
   });
 
   const onSubmit = async (data: z.infer<typeof addPlannerValidation>) => {
-    await handleSubmit(data.name);
-    form.reset();
+    try {
+      await handleSubmit(data.name);
+      form.reset();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

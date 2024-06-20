@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 
 export const addPlanner = async (name: string) => {
   'use server';
-  console.log(name);
+
   try {
     if (!name) return;
     if (!getUser()) return;

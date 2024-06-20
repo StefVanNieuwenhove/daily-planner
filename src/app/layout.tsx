@@ -6,6 +6,7 @@ import { ClerkProvider } from '@clerk/nextjs';
 import { Footer, Navbar } from '@/components';
 import { Separator } from '@/components/ui/separator';
 import { isLoggedIn } from '@/lib/auth';
+import { Toaster } from '@/components/ui/sonner';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -32,6 +33,7 @@ export default function RootLayout({
             <main className='container flex gap-2 w-full h-screen p-2'>
               {children}
             </main>
+            <Toaster />
             <Separator />
             <footer className='bottom-0 w-full flex items-center justify-center gap-4 py-4'>
               <Footer />

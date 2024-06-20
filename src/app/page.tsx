@@ -1,5 +1,8 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 
 export default function Home() {
-  return <Button>Click me</Button>;
+  return <Button onClick={() => toast.success('Hello world')}>Hello</Button>;
 }
