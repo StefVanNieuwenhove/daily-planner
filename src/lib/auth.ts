@@ -1,6 +1,6 @@
 import { auth } from '@clerk/nextjs/server';
 
-export const isLoggedIn = () => {
+export const isLoggedIn = (): boolean => {
   const { userId } = auth();
   return !!userId;
 };

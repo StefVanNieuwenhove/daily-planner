@@ -7,6 +7,7 @@ import { Footer, Navbar } from '@/components';
 import { Separator } from '@/components/ui/separator';
 import { isLoggedIn } from '@/lib/auth';
 import { Toaster } from '@/components/ui/sonner';
+import CustomCursor from '@/components/ui/custom-cursor';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -29,8 +30,9 @@ export default function RootLayout({
             defaultTheme='system'
             enableSystem
             disableTransitionOnChange>
-            <Navbar isLoggedIn={isLoggedIn()} />
-            <main className='container flex gap-2 w-full h-screen p-2'>
+            <Navbar isLoggedIn={true} />
+            <main className=' flex gap-2 w-full h-screen px-4 py-2'>
+              <CustomCursor />
               {children}
             </main>
             <Toaster />

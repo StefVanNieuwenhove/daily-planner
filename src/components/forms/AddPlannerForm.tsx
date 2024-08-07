@@ -56,8 +56,15 @@ const AddPlannerForm = ({ handleSubmit }: AddPlannerFormProps) => {
             </FormItem>
           )}
         />
-        <Button type='submit' variant={'outline'} className='w-full'>
+        <Button type='submit' variant={'outline'} className='w-full mb-1'>
           Add Planner
+        </Button>
+        <Button
+          type='reset'
+          variant={'outline'}
+          onClick={() => form.reset()}
+          className='w-full'>
+          Clear
         </Button>
       </form>
     </Form>
