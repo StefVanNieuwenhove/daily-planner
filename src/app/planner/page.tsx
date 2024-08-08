@@ -4,37 +4,23 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { getUser } from '@/lib/auth';
-import prisma from '@/lib/prisma';
-import { taskByPlanner } from '@/lib/tasks';
-import { TaskWithPlanner } from '@/type/task';
+import { getPlannerWithTasks } from '@/data-acces/planners';
 
 const PlannerPage = async () => {
-  const tasks: TaskWithPlanner[] = await prisma.task.findMany({
-    where: { userId: getUser() as string },
-    include: {
-      planner: {
-        select: {
-          name: true,
-        },
-      },
-    },
-  });
+  const planners = await getPlannerWithTasks();
 
   return (
     <>
       <Accordion type='multiple'>
-        {Object.entries(taskByPlanner(tasks)).map(([plannerName, tasks]) => (
+        {planners.map((planner) => (
           <AccordionItem
-            key={plannerName}
-            title={plannerName}
-            value={plannerName}>
-            <AccordionTrigger>{plannerName}</AccordionTrigger>
+            key={planner.id}
+            title={planner.name}
+            value={planner.id}>
+            <AccordionTrigger>{planner.name}</AccordionTrigger>
             <AccordionContent>
-              {tasks.map((task) => (
-                <div key={task.id} className='flex items-center gap-2'>
-                  <span className='text-sm'>{task.name}</span>
-                </div>
+              {planner.tasks.map((task) => (
+                <div key={task.id}>{task.name}</div>
               ))}
             </AccordionContent>
           </AccordionItem>

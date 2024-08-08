@@ -2,9 +2,6 @@ import { AddPlannerForm } from '@/components';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { FolderOpenIcon } from 'lucide-react';
-import { addPlanner } from './action';
-import prisma from '@/lib/prisma';
-import { getUser } from '@/lib/auth';
 import {
   ResizableHandle,
   ResizablePanel,
@@ -12,18 +9,15 @@ import {
 } from '@/components/ui/resizable';
 import Link from 'next/link';
 import Combobox from '@/components/ui/combobox';
+import { getPlanners, addPlanner } from '@/data-acces/planners';
+import { Planner } from '@prisma/client';
 
 type PlannerLayoutProps = {
   children: React.ReactNode;
 };
 
 const PlannerLayout = async ({ children }: PlannerLayoutProps) => {
-  const planners = await prisma.planner.findMany({
-    where: { userId: getUser() as string },
-    orderBy: {
-      createdAt: 'desc',
-    },
-  });
+  const planners: Planner[] = await getPlanners();
 
   return (
     <>
