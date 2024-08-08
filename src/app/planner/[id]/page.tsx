@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button';
 import React from 'react';
 
 type PlannerIdPageProps = {
@@ -7,7 +8,11 @@ type PlannerIdPageProps = {
 };
 
 const PlannerIdPage = ({ params }: PlannerIdPageProps) => {
-  return <div>page {params.id}</div>;
+  return (
+    <>
+      <Button>{params.id}</Button>
+    </>
+  );
 };
 
 export default PlannerIdPage;

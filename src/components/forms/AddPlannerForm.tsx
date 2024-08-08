@@ -17,12 +17,9 @@ import {
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { toast } from 'sonner';
+import { addPlanner } from '@/data-acces/planners';
 
-type AddPlannerFormProps = {
-  handleSubmit: (name: string) => void;
-};
-
-const AddPlannerForm = ({ handleSubmit }: AddPlannerFormProps) => {
+const AddPlannerForm = () => {
   const form = useForm<z.infer<typeof addPlannerValidation>>({
     resolver: zodResolver(addPlannerValidation),
     defaultValues: {
@@ -32,10 +29,15 @@ const AddPlannerForm = ({ handleSubmit }: AddPlannerFormProps) => {
 
   const onSubmit = async (data: z.infer<typeof addPlannerValidation>) => {
     try {
-      await handleSubmit(data.name);
+      const result = await addPlanner(data.name);
+      if (result.status === 'error') {
+        toast.error(result.message);
+      } else {
+        toast.success(result.message);
+      }
       form.reset();
     } catch (error) {
-      console.error(error);
+      toast.error('Failed to create a new planner');
     }
   };
 
