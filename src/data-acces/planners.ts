@@ -17,7 +17,6 @@ export const getPlanners = async (): Promise<Planner[]> => {
         createdAt: 'desc',
       },
     });
-    console.log(planners);
     return planners;
   } catch (error) {
     return [];
@@ -76,6 +75,36 @@ export const addPlanner = async (name: string): Promise<FormResponse> => {
     return { status: 'success', message: 'Planner created successfully' };
   } catch (error) {
     return { status: 'error', message: 'Failed to create a new planner' };
+  }
+};
+
+export const updatePlannerName = async (
+  oldName: string,
+  newName: string | undefined
+): Promise<FormResponse> => {
+  'use server';
+
+  try {
+    if (!newName) return { status: 'error', message: 'Name is required' };
+    if (!getUser()) redirect('/login');
+
+    const regex = /^[a-zA-Z0-9-_]+$/;
+    if (!regex.test(newName))
+      return { status: 'error', message: 'Invalid name' };
+
+    await prisma.planner.update({
+      where: {
+        name: oldName.trim().toLowerCase(),
+        userId: getUser() || '',
+      },
+      data: {
+        name: newName.trim().toLowerCase(),
+      },
+    });
+    revalidatePath('/planner');
+    return { status: 'success', message: 'Planner name updated successfully' };
+  } catch (error) {
+    return { status: 'error', message: 'Failed to update the planner name' };
   }
 };
 
