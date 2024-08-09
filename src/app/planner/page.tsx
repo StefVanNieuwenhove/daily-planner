@@ -5,6 +5,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { getPlannerWithTasks } from '@/data-acces/planners';
+import { upperCaseFirst } from '@/lib/utils';
 
 const PlannerPage = async () => {
   const planners = await getPlannerWithTasks();
@@ -17,11 +18,15 @@ const PlannerPage = async () => {
             key={planner.id}
             title={planner.name}
             value={planner.id}>
-            <AccordionTrigger>{planner.name}</AccordionTrigger>
+            <AccordionTrigger>{upperCaseFirst(planner.name)}</AccordionTrigger>
             <AccordionContent>
-              {planner.tasks.map((task) => (
-                <div key={task.id}>{task.name}</div>
-              ))}
+              {planner.tasks.length > 0 ? (
+                planner.tasks.map((task) => (
+                  <div key={task.id}>{task.name}</div>
+                ))
+              ) : (
+                <span>No tasks found, add some!</span>
+              )}
             </AccordionContent>
           </AccordionItem>
         ))}

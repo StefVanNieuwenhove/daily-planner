@@ -16,9 +16,9 @@ datasource db {
 
 model Planner {
   id        String   @id @default(uuid())
-  name      String  
+  name      String  @unique
   userId    String
-  tasks     Task[]
+  tasks     Task[] 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -26,7 +26,7 @@ model Planner {
 model Task {
   id        String   @id @default(uuid())
   name      String
-  planner Planner @relation(fields: [plannerId], references: [id])
+  planner Planner @relation(fields: [plannerId], references: [id], onDelete: Cascade)
   plannerId String
   userId    String
   createdAt DateTime @default(now())

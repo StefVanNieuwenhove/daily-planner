@@ -10,6 +10,7 @@
 # Planner page
 - [x] overview planner => sidebar
 - [x] add planner
+- [ ] edit planner
 - [ ] delete planner
 - [ ] add task
 - [ ] edit task

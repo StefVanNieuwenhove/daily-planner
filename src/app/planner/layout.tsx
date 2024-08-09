@@ -9,10 +9,9 @@ import {
 } from '@/components/ui/resizable';
 import Link from 'next/link';
 import Combobox from '@/components/ui/combobox';
-import { getPlanners, addPlanner } from '@/data-acces/planners';
+import { getPlanners } from '@/data-acces/planners';
 import { Planner } from '@prisma/client';
-import { FormResponse } from '@/types/task';
-import { toast } from 'sonner';
+import { upperCaseFirst } from '@/lib/utils';
 
 type PlannerLayoutProps = {
   children: React.ReactNode;
@@ -20,16 +19,6 @@ type PlannerLayoutProps = {
 
 const PlannerLayout = async ({ children }: PlannerLayoutProps) => {
   const planners: Planner[] = await getPlanners();
-
-  const handleSubmit = async (name: string) => {
-    'use server';
-    const result: FormResponse = await addPlanner(name);
-    if (result.status === 'error') {
-      toast.error(result.message);
-    } else {
-      toast.success(result.message);
-    }
-  };
 
   return (
     <>
@@ -42,19 +31,23 @@ const PlannerLayout = async ({ children }: PlannerLayoutProps) => {
             <aside className='flex flex-col gap-2 text-sm'>
               <AddPlannerForm />
               <Separator />
-              {planners.map((planner) => (
-                <Button
-                  asChild
-                  key={planner.id}
-                  className='flex items-center justify-center gap-2'>
-                  <Link href={`/planner/${planner.name}`}>
-                    <span className='flex items-center justify-center gap-1'>
-                      <FolderOpenIcon className='w-4 h-4' />
-                      {planner.name}
-                    </span>
-                  </Link>
-                </Button>
-              ))}
+              {planners.length > 0 ? (
+                planners.map((planner) => (
+                  <Button
+                    asChild
+                    key={planner.id}
+                    className='flex items-center justify-center gap-2'>
+                    <Link href={`/planner/${planner.name}`}>
+                      <span className='flex items-center justify-center gap-1'>
+                        <FolderOpenIcon className='w-4 h-4' />
+                        {upperCaseFirst(planner.name)}
+                      </span>
+                    </Link>
+                  </Button>
+                ))
+              ) : (
+                <span>No planners found</span>
+              )}
             </aside>
           </section>
         </ResizablePanel>
