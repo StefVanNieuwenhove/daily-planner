@@ -51,7 +51,7 @@ const AddPlannerForm = () => {
             <FormItem>
               <FormLabel className='text-xs'>Create a new planner</FormLabel>
               <FormControl>
-                <Input placeholder='Planner name' {...field} />
+                <Input placeholder='Planner name' {...field} autoFocus />
               </FormControl>
               <FormDescription className='text-xs'></FormDescription>
               <FormMessage className='text-xs' />

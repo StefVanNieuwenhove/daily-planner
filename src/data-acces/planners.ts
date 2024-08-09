@@ -61,6 +61,9 @@ export const addPlanner = async (name: string): Promise<FormResponse> => {
     if (!name) return { status: 'error', message: 'Name is required' };
     if (!getUser()) redirect('/login');
 
+    const regex = /^[a-zA-Z0-9-_]+$/;
+    if (!regex.test(name)) return { status: 'error', message: 'Invalid name' };
+
     await prisma.planner.create({
       data: {
         name: name.trim().toLowerCase(),

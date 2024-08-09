@@ -28,7 +28,7 @@ const PlannerLayout = async ({ children }: PlannerLayoutProps) => {
             <h2 className='text-xl font-bold underline'>
               <Link href={'/planner'}>My Planners</Link>
             </h2>
-            <aside className='flex flex-col gap-2 text-sm'>
+            <aside className='flex flex-col gap-2 text-sm overflow-scroll'>
               <AddPlannerForm />
               <Separator />
               {planners.length > 0 ? (
