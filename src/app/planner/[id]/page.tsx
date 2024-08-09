@@ -1,20 +1,11 @@
 'use client';
 
-import {
-  ContextMenu,
-  ContextMenuContent,
-  ContextMenuItem,
-  ContextMenuTrigger,
-} from '@/components/ui/context-menu';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { deletePlanner } from '@/data-acces/planners';
-import { Settings } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { deletePlanner, getPlannerByName } from '@/data-acces/planners';
+import { Edit, Trash } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+
 import { toast } from 'sonner';
 
 type PlannerIdPageProps = {
@@ -26,8 +17,16 @@ type PlannerIdPageProps = {
 const PlannerIdPage = ({ params }: PlannerIdPageProps) => {
   const router = useRouter();
 
-  const deletePlannerHandler = async (name: string) => {
-    const response = await deletePlanner(name);
+  useEffect(() => {
+    const checkPlanner = async () => {
+      const planner = await getPlannerByName(params.id);
+      if (!planner) return router.push('/planner');
+    };
+    checkPlanner();
+  });
+
+  const deletePlannerHandler = async () => {
+    const response = await deletePlanner(params.id);
     if (response.status === 'success') {
       toast.success(response.message);
       return router.push('/planner');
@@ -42,27 +41,14 @@ const PlannerIdPage = ({ params }: PlannerIdPageProps) => {
         <h3 className='text-2xl font-bold uppercase pt-2 underline text-primary'>
           {params.id}
         </h3>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger>
-              <ContextMenu>
-                <ContextMenuTrigger asChild>
-                  <Settings className='w-5 h-5 text-primary' />
-                </ContextMenuTrigger>
-                <ContextMenuContent>
-                  <ContextMenuItem>Edit</ContextMenuItem>
-                  <ContextMenuItem
-                    onClick={() => deletePlannerHandler(params.id)}>
-                    Delete
-                  </ContextMenuItem>
-                </ContextMenuContent>
-              </ContextMenu>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Right click to access the settings menu</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <div className='flex gap-2'>
+          <Button size={'icon'} onClick={deletePlannerHandler}>
+            <Trash className='w-5 h-5' />
+          </Button>
+          <Button size={'icon'}>
+            <Edit className='w-5 h-5' />
+          </Button>
+        </div>
       </div>
     </>
   );

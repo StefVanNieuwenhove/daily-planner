@@ -11,14 +11,16 @@ export const getPlanners = async (): Promise<Planner[]> => {
   try {
     const user = getUser() as string;
     if (!user) redirect('/login');
-    return await prisma.planner.findMany({
+    const planners = await prisma.planner.findMany({
       where: { userId: user },
       orderBy: {
         createdAt: 'desc',
       },
     });
+    console.log(planners);
+    return planners;
   } catch (error) {
-    throw new Error('Failed to get planners');
+    return [];
   }
 };
 
@@ -32,7 +34,7 @@ export const getPlannerByName = async (
       where: { name: name.trim().toLowerCase(), userId: user },
     });
   } catch (error) {
-    throw new Error('Failed to get planner');
+    return null;
   }
 };
 
@@ -50,7 +52,7 @@ export const getPlannerWithTasks = async (): Promise<PlannerWithTasks[]> => {
       },
     });
   } catch (error) {
-    throw new Error('Failed to get planners with tasks');
+    return [];
   }
 };
 

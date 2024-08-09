@@ -18,7 +18,7 @@ type PlannerLayoutProps = {
 };
 
 const PlannerLayout = async ({ children }: PlannerLayoutProps) => {
-  const planners: Planner[] = await getPlanners();
+  const planners = await getPlanners();
 
   return (
     <>
@@ -31,8 +31,8 @@ const PlannerLayout = async ({ children }: PlannerLayoutProps) => {
             <aside className='flex flex-col gap-2 text-sm overflow-scroll'>
               <AddPlannerForm />
               <Separator />
-              {planners.length > 0 ? (
-                planners.map((planner) => (
+              {planners.length ? (
+                planners.map((planner: Planner) => (
                   <Button
                     asChild
                     key={planner.id}
@@ -57,7 +57,7 @@ const PlannerLayout = async ({ children }: PlannerLayoutProps) => {
             <div>
               <Combobox
                 options={planners
-                  .map((planner) => ({
+                  ?.map((planner: Planner) => ({
                     value: planner.name,
                     id: planner.id,
                   }))

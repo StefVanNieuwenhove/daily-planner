@@ -8,7 +8,6 @@ import {
   NavigationMenuList,
 } from '../ui/navigation-menu';
 import { Separator } from '../ui/separator';
-import { ThemeToggle } from '../ui/ThemeToggle';
 import { Button } from '../ui/button';
 import Link from 'next/link';
 import {
@@ -21,6 +20,7 @@ import {
 } from '../ui/sheet';
 import { useState } from 'react';
 import { MenuIcon } from 'lucide-react';
+import { ThemeToggle } from '../layout';
 
 type NavbarProps = {
   isLoggedIn: boolean;

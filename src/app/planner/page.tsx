@@ -15,28 +15,36 @@ const PlannerPage = async () => {
   return (
     <>
       <Accordion type='multiple'>
-        {planners.map((planner) => (
-          <AccordionItem
-            key={planner.id}
-            title={planner.name}
-            value={planner.id}>
-            <AccordionTrigger>{upperCaseFirst(planner.name)}</AccordionTrigger>
-            <AccordionContent>
-              {planner.tasks.length > 0 ? (
-                planner.tasks.map((task) => (
-                  <div key={task.id}>{task.name}</div>
-                ))
-              ) : (
-                <span>
-                  No tasks found,{' '}
-                  <Link href={`/planner/${planner.name}`} className='underline'>
-                    add some!
-                  </Link>
-                </span>
-              )}
-            </AccordionContent>
-          </AccordionItem>
-        ))}
+        {planners.length ? (
+          planners.map((planner) => (
+            <AccordionItem
+              key={planner.id}
+              title={planner.name}
+              value={planner.id}>
+              <AccordionTrigger>
+                {upperCaseFirst(planner.name)}
+              </AccordionTrigger>
+              <AccordionContent>
+                {planner.tasks.length > 0 ? (
+                  planner.tasks.map((task) => (
+                    <div key={task.id}>{task.name}</div>
+                  ))
+                ) : (
+                  <span>
+                    No tasks found,{' '}
+                    <Link
+                      href={`/planner/${planner.name}`}
+                      className='underline'>
+                      add some!
+                    </Link>
+                  </span>
+                )}
+              </AccordionContent>
+            </AccordionItem>
+          ))
+        ) : (
+          <span>No planners found</span>
+        )}
       </Accordion>
     </>
   );
