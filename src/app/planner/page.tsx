@@ -4,8 +4,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import { Button } from '@/components/ui/button';
 import { getPlannerWithTasks } from '@/data-acces/planners';
 import { upperCaseFirst } from '@/lib/utils';
+import Link from 'next/link';
 
 const PlannerPage = async () => {
   const planners = await getPlannerWithTasks();
@@ -25,7 +27,12 @@ const PlannerPage = async () => {
                   <div key={task.id}>{task.name}</div>
                 ))
               ) : (
-                <span>No tasks found, add some!</span>
+                <span>
+                  No tasks found,{' '}
+                  <Link href={`/planner/${planner.name}`} className='underline'>
+                    add some!
+                  </Link>
+                </span>
               )}
             </AccordionContent>
           </AccordionItem>
