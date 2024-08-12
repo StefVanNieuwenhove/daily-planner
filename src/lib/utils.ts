@@ -8,3 +8,22 @@ export function cn(...inputs: ClassValue[]) {
 export const upperCaseFirst = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
+
+export const formatDate = (date: Date, houreFormat?: boolean) => {
+  if (houreFormat) {
+    return date.toLocaleString('be-BE', {
+      weekday: 'long',
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    });
+  }
+  return date.toLocaleString('be-BE', {
+    weekday: 'long',
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
+};

@@ -13,12 +13,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Planner {
   id        String   @id @default(uuid())
-  name      String  @unique
+  name      String   @unique
   userId    String
-  tasks     Task[] 
+  tasks     Task[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -26,9 +25,26 @@ model Planner {
 model Task {
   id        String   @id @default(uuid())
   name      String
-  planner Planner @relation(fields: [plannerId], references: [id], onDelete: Cascade)
+  planner   Planner  @relation(fields: [plannerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  status    TaskStatus @default(BACKLOG)
+  priority  TaskPriority @default(HIGH)
   plannerId String
   userId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum TaskStatus {
+  BACKLOG
+  PLANNING
+  IN_PROGRESS
+  PAUSED
+  COMPLETED
+  CANCELLED
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
 }

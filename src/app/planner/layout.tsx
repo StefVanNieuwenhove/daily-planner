@@ -12,6 +12,7 @@ import Combobox from '@/components/ui/combobox';
 import { getPlanners } from '@/data-acces/planners';
 import { Planner } from '@prisma/client';
 import { upperCaseFirst } from '@/lib/utils';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 type PlannerLayoutProps = {
   children: React.ReactNode;
@@ -31,23 +32,25 @@ const PlannerLayout = async ({ children }: PlannerLayoutProps) => {
             <aside className='flex flex-col gap-2 text-sm overflow-scroll'>
               <AddPlannerForm />
               <Separator />
-              {planners.length ? (
-                planners.map((planner: Planner) => (
-                  <Button
-                    asChild
-                    key={planner.id}
-                    className='flex items-center justify-center gap-2'>
-                    <Link href={`/planner/${planner.name}`}>
-                      <span className='flex items-center justify-center gap-1'>
-                        <FolderOpenIcon className='w-4 h-4' />
-                        {upperCaseFirst(planner.name)}
-                      </span>
-                    </Link>
-                  </Button>
-                ))
-              ) : (
-                <span>No planners found</span>
-              )}
+              <ScrollArea>
+                {planners.length ? (
+                  planners.map((planner: Planner) => (
+                    <Button
+                      asChild
+                      key={planner.id}
+                      className='flex items-center justify-center gap-2'>
+                      <Link href={`/planner/${planner.name}`}>
+                        <span className='flex items-center justify-center gap-1'>
+                          <FolderOpenIcon className='w-4 h-4' />
+                          {upperCaseFirst(planner.name)}
+                        </span>
+                      </Link>
+                    </Button>
+                  ))
+                ) : (
+                  <span>No planners found</span>
+                )}
+              </ScrollArea>
             </aside>
           </section>
         </ResizablePanel>

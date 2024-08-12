@@ -10,12 +10,14 @@
     "lint": "next lint",
     "db:push": "prisma db push",
     "db:pull": "prisma db pull",
-    "db:studio": "prisma studio",
-    "db:generate": "prisma generate",
-    "db:run": "docker compose up"
+    "db:run": "docker compose up",
+    "prisma:format": "prisma format",
+    "prisma:studio": "prisma studio",
+    "prisma:generate": "prisma generate"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.1.5",
+    "@hello-pangea/dnd": "^16.6.0",
     "@hookform/resolvers": "^3.6.0",
     "@prisma/client": "^5.15.1",
     "@radix-ui/react-accordion": "^1.2.0",
@@ -27,6 +29,8 @@
     "@radix-ui/react-menubar": "^1.1.0",
     "@radix-ui/react-navigation-menu": "^1.1.4",
     "@radix-ui/react-popover": "^1.1.1",
+    "@radix-ui/react-scroll-area": "^1.1.0",
+    "@radix-ui/react-select": "^2.1.1",
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tooltip": "^1.1.2",
@@ -38,6 +42,7 @@
     "next": "14.2.3",
     "next-themes": "^0.3.0",
     "react": "^18",
+    "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18",
     "react-hook-form": "^7.52.0",
     "react-resizable-panels": "^2.0.19",
@@ -50,6 +55,7 @@
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
+    "@types/react-beautiful-dnd": "^13.1.8",
     "@types/react-dom": "^18",
     "drizzle-kit": "^0.22.2",
     "eslint": "^8",
