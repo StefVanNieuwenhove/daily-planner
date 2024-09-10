@@ -3,10 +3,16 @@ import {
   updatePlannerName,
   getPlannerByName,
 } from '@/data-acces/planners';
-import { Edit, Trash } from 'lucide-react';
+import { Edit, FileCheck2, Trash } from 'lucide-react';
 import { ButtonActions, DragDropTasks, KanbanTasks } from '@/components/layout';
 import { redirect } from 'next/navigation';
-import { getTasksByPlannerName } from '@/data-acces/tasks';
+import {
+  createTask,
+  getTasksByPlannerName,
+  updateTaskPriority,
+  updateTaskStatus,
+} from '@/data-acces/tasks';
+import { toast } from 'sonner';
 
 type PlannerIdPageProps = {
   params: {
@@ -19,7 +25,34 @@ const PlannerNamePage = async ({ params }: PlannerIdPageProps) => {
   const tasks = await getTasksByPlannerName(params.name);
   if (!planner) redirect('/planner');
 
-  console.log(tasks);
+  const handleStatusChange = async (status: string, taskId: string) => {
+    'use server';
+    try {
+      const result = await updateTaskStatus(taskId, status);
+      if (result.status === 'success') {
+        toast.success(result.message);
+      } else {
+        toast.error(result.message);
+      }
+    } catch (error) {
+      toast.error('Failed to update task status');
+    }
+  };
+
+  const handlePriorityChange = async (priority: string, taskId: string) => {
+    'use server';
+    try {
+      const result = await updateTaskPriority(taskId, priority);
+      if (result.status === 'success') {
+        toast.success(result.message);
+      } else {
+        toast.error(result.message);
+      }
+    } catch (error) {
+      toast.error('Failed to update task priority');
+    }
+  };
+
   return (
     <>
       <article className='flex items-center justify-between gap-2'>
@@ -27,6 +60,18 @@ const PlannerNamePage = async ({ params }: PlannerIdPageProps) => {
           {params.name}
         </h3>
         <div className='flex gap-2'>
+          <ButtonActions
+            plannerName={params.name}
+            type='create'
+            title='Create task'
+            description='Create a new task for this planner.'
+            action={{
+              handler: createTask,
+              text: 'create',
+              redirect: `/planner/${params.name}`,
+            }}
+            icon={<FileCheck2 className='w-5 h-5' />}
+          />
           <ButtonActions
             plannerName={params.name}
             type='delete'

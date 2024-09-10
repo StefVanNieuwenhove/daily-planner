@@ -7,7 +7,7 @@ import {
   DraggableLocation,
   Draggable,
 } from 'react-beautiful-dnd';
-import { Task, TaskStatus } from '@prisma/client';
+import { Task } from '@prisma/client';
 import {
   Card,
   CardContent,
@@ -15,7 +15,6 @@ import {
   CardHeader,
   CardTitle,
 } from '../ui/card';
-import { useCallback, useState } from 'react';
 import { formatDate } from '@/lib/utils';
 import {
   Select,
@@ -24,9 +23,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select';
+import { updateTaskPriority, updateTaskStatus } from '@/data-acces/tasks';
+import { toast } from 'sonner';
 
 type KanbanTasksProps = {
   tasks: Task[];
+  handleStatusChange: (status: string, taskId: string) => void;
+  handlePriorityChange: (priority: string, taskId: string) => void;
 };
 
 const TASKS_STATUS = [
@@ -38,10 +41,35 @@ const TASKS_STATUS = [
   'CANCELLED',
 ];
 
+const PRIORITY = ['LOW', 'MEDIUM', 'HIGH'];
+
 const KanbanTasks = ({ tasks }: KanbanTasksProps) => {
-  const handleStatusChange = (status: string) => {
-    console.log(status);
+  const handleUpdateTaskStatus = async (status: string, taskId: string) => {
+    try {
+      const result = await updateTaskStatus(taskId, status);
+      if (result.status === 'success') {
+        toast.success(result.message);
+      } else {
+        toast.error(result.message);
+      }
+    } catch (error) {
+      toast.error('Failed to update task status');
+    }
   };
+
+  const handleUpdateTaskPriority = async (priority: string, taskId: string) => {
+    try {
+      const result = await updateTaskPriority(taskId, priority);
+      if (result.status === 'success') {
+        toast.success(result.message);
+      } else {
+        toast.error(result.message);
+      }
+    } catch (error) {
+      toast.error('Failed to update task priority');
+    }
+  };
+
   return (
     <>
       <div className='flex w-full justify-between gap-2'>
@@ -62,19 +90,44 @@ const KanbanTasks = ({ tasks }: KanbanTasksProps) => {
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <p>Priority: {task.priority}</p>
-                      <Select onValueChange={handleStatusChange}>
-                        <SelectTrigger>
-                          <SelectValue placeholder={task.status} />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {TASKS_STATUS.map((status) => (
-                            <SelectItem key={status} value={status}>
-                              {status.replace('_', ' ').toUpperCase()}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                      <div>
+                        <label>Priority</label>
+                        <Select
+                          onValueChange={(value) =>
+                            handleUpdateTaskPriority(value, task.id)
+                          }
+                          name='status'>
+                          <SelectTrigger>
+                            <SelectValue placeholder={task.priority} />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {PRIORITY.map((status) => (
+                              <SelectItem key={status} value={status}>
+                                {status.replace('_', ' ').toUpperCase()}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div>
+                        <label>Status</label>
+                        <Select
+                          onValueChange={(value) =>
+                            handleUpdateTaskStatus(value, task.id)
+                          }
+                          name='status'>
+                          <SelectTrigger>
+                            <SelectValue placeholder={task.status} />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {TASKS_STATUS.map((status) => (
+                              <SelectItem key={status} value={status}>
+                                {status.replace('_', ' ').toUpperCase()}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
                     </CardContent>
                   </Card>
                 ))}

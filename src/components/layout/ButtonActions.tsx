@@ -40,7 +40,8 @@ const ButtonActions = ({
   action,
   icon,
 }: ButtonActionsProps) => {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const valueRef = useRef<HTMLInputElement>(null);
+  const createRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
   const handle = useCallback(async () => {
@@ -50,9 +51,11 @@ const ButtonActions = ({
     };
     switch (type) {
       case 'create':
+        console.log(valueRef.current?.value);
+        result = await action.handler(plannerName, valueRef.current?.value);
         break;
       case 'edit':
-        result = await action.handler(plannerName, inputRef.current?.value);
+        result = await action.handler(plannerName, valueRef.current?.value);
         break;
       case 'delete':
         result = await action.handler(plannerName);
@@ -80,11 +83,22 @@ const ButtonActions = ({
         </AlertDialogHeader>
         {type === 'edit' && (
           <>
-            <label htmlFor='planner-name'>Name</label>
+            <label htmlFor='planner-name'>Planner name</label>
             <Input
-              ref={inputRef}
+              ref={valueRef}
               id='planner-name'
               placeholder='Planner name'
+              autoFocus
+            />
+          </>
+        )}
+        {type === 'create' && (
+          <>
+            <label htmlFor='task-name'>Task name</label>
+            <Input
+              ref={valueRef}
+              id='task-name'
+              placeholder='Taks name'
               autoFocus
             />
           </>
