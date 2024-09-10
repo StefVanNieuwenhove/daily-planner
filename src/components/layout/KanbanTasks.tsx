@@ -28,8 +28,6 @@ import { toast } from 'sonner';
 
 type KanbanTasksProps = {
   tasks: Task[];
-  handleStatusChange: (status: string, taskId: string) => void;
-  handlePriorityChange: (priority: string, taskId: string) => void;
 };
 
 const TASKS_STATUS = [

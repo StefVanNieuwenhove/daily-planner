@@ -25,34 +25,6 @@ const PlannerNamePage = async ({ params }: PlannerIdPageProps) => {
   const tasks = await getTasksByPlannerName(params.name);
   if (!planner) redirect('/planner');
 
-  const handleStatusChange = async (status: string, taskId: string) => {
-    'use server';
-    try {
-      const result = await updateTaskStatus(taskId, status);
-      if (result.status === 'success') {
-        toast.success(result.message);
-      } else {
-        toast.error(result.message);
-      }
-    } catch (error) {
-      toast.error('Failed to update task status');
-    }
-  };
-
-  const handlePriorityChange = async (priority: string, taskId: string) => {
-    'use server';
-    try {
-      const result = await updateTaskPriority(taskId, priority);
-      if (result.status === 'success') {
-        toast.success(result.message);
-      } else {
-        toast.error(result.message);
-      }
-    } catch (error) {
-      toast.error('Failed to update task priority');
-    }
-  };
-
   return (
     <>
       <article className='flex items-center justify-between gap-2'>
