@@ -1,11 +1,7 @@
 import { SignIn } from '@clerk/nextjs';
 
 const SignInPage = () => {
-  return (
-    <main className='container mx-auto flex flex-col items-center justify-center h-screen'>
-      <SignIn />
-    </main>
-  );
+  return <SignIn />;
 };
 
 export default SignInPage;

@@ -1,13 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { ThemeProvider } from '@/components/ui/theme-provider';
-import { ClerkProvider } from '@clerk/nextjs';
-import { Footer, Navbar } from '@/components';
-import { Separator } from '@/components/ui/separator';
-import { isLoggedIn } from '@/lib/auth';
-import CustomCursor from '@/components/ui/custom-cursor';
-import { Toaster } from '@/components/ui/sonner';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,27 +15,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang='en'>
-        <body className={inter.className}>
-          <ThemeProvider
-            attribute='class'
-            defaultTheme='system'
-            enableSystem
-            disableTransitionOnChange>
-            <Navbar isLoggedIn={isLoggedIn()} />
-            <main className=' flex gap-2 w-full h-screen px-4 py-2'>
-              <CustomCursor />
-              {children}
-            </main>
-            <Toaster />
-            <Separator />
-            <footer className='bottom-0 w-full flex items-center justify-center gap-4 py-4'>
-              <Footer />
-            </footer>
-          </ThemeProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang='en'>
+      <body className={inter.className}>
+        <header></header>
+        <main className='container mx-auto min-h-screen h-full my-3'>
+          {children}
+        </main>
+        <footer></footer>
+      </body>
+    </html>
   );
 }

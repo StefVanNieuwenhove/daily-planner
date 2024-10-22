@@ -1,11 +1,7 @@
 import { UserProfile } from '@clerk/nextjs';
 
 const UserProfilePage = () => {
-  return (
-    <main className='flex flex-col items-center justify-center h-full w-full'>
-      <UserProfile path='/user-profile' />
-    </main>
-  );
+  return <UserProfile path='/user-profile' />;
 };
 
 export default UserProfilePage;

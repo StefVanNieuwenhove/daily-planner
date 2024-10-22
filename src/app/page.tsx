@@ -1,12 +1,5 @@
-'use client';
+const HomePage = () => {
+  return <></>;
+};
 
-import { Button } from '@/components/ui/button';
-import { toast } from 'sonner';
-
-export default function Home() {
-  return (
-    <>
-      <Button onClick={() => toast.success('Hello world')}>Hello stefan</Button>
-    </>
-  );
-}
+export default HomePage;
