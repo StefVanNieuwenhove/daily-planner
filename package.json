@@ -1,7 +1,7 @@
 {
-  "name": "nextjs-shadcn-drizzle-template",
+  "name": "daily-planner",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "license": "MIT",
   "scripts": {
     "dev": "next dev",
@@ -19,6 +19,8 @@
     "@clerk/nextjs": "^5.1.5",
     "@hookform/resolvers": "^3.6.0",
     "@prisma/client": "^5.15.1",
+    "@radix-ui/react-dialog": "^1.1.2",
+    "@radix-ui/react-slot": "^1.1.0",
     "@t3-oss/env-nextjs": "^0.10.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
