@@ -23,6 +23,7 @@ import {
 import { Button } from '../ui/button';
 import { FormResponse } from '@/types';
 import { toast } from 'sonner';
+import { Separator } from '../ui/separator';
 
 type FormProviderProps<T extends z.ZodObject<any, any>> = PropsWithChildren<{
   side?: 'left' | 'right';
@@ -78,11 +79,21 @@ const FormProvider = <T extends ZodObject<any>>({
             onSubmit={form.handleSubmit(onSubmit)}
             className='w-full my-2 space-y-4'>
             {children}
-            <Button
-              className='w-full capitalize hover:underline focus:underline'
-              disabled={form.formState.isSubmitting}>
-              Create planner
-            </Button>
+            <Separator />
+            <div className='w-full flex flex-col space-y-2'>
+              <Button
+                className='w-full capitalize hover:underline focus:underline'
+                variant={'outline'}
+                onClick={() => form.reset()}
+                disabled={form.formState.isSubmitting}>
+                Reset
+              </Button>
+              <Button
+                className='w-full capitalize hover:underline focus:underline'
+                disabled={form.formState.isSubmitting}>
+                Create
+              </Button>
+            </div>
           </form>
         </Form>
       </SheetContent>

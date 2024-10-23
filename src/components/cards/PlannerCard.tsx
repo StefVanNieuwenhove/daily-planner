@@ -16,6 +16,15 @@ import { PlannerWithTasks } from '@/types';
 import { DeleteDialog } from '../forms';
 import { deletePlanner } from '@/data-acces/planner';
 import { toast } from 'sonner';
+import { Badge } from '../ui/badge';
+import { Task, TaskPriority, TaskStatus } from '@prisma/client';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { TaskAccordion } from '../accordions';
 
 type PlannerCardProps = {
   planner: PlannerWithTasks;
@@ -33,6 +42,24 @@ const PlannerCard = ({ planner, className }: PlannerCardProps) => {
     }
   };
 
+  // group the tasks by priority
+  const priorities = planner.tasks.reduce(
+    (acc: Record<TaskPriority, Task[]>, task) => {
+      if (!acc[task.priority]) {
+        acc[task.priority] = [];
+      }
+
+      acc[task.priority].push(task);
+
+      return acc;
+    },
+    {
+      HIGH: [],
+      MEDIUM: [],
+      LOW: [],
+    } as Record<TaskPriority, Task[]>
+  );
+
   return (
     <Card className={cn('w-full', className)}>
       <CardHeader className='border-b pt-4 pb-3 space-y-3'>
@@ -44,15 +71,23 @@ const PlannerCard = ({ planner, className }: PlannerCardProps) => {
         </CardDescription>
       </CardHeader>
       <CardContent className='border-b py-2'>
-        {planner.tasks.length ? (
-          planner.tasks.map((task) => (
-            <div key={task.id}>
-              <p>{task.name}</p>
-            </div>
-          ))
-        ) : (
-          <span>This planner doesn&apos;t have tasks</span>
-        )}
+        <Accordion type='multiple' className='space-y-2'>
+          <TaskAccordion
+            value='HIGH'
+            tasks={priorities.HIGH}
+            defaultText='No tasks with high priority'
+          />
+          <TaskAccordion
+            value='MEDIUM'
+            tasks={priorities.MEDIUM}
+            defaultText='No tasks with medium priority'
+          />
+          <TaskAccordion
+            value='LOW'
+            tasks={priorities.LOW}
+            defaultText='No tasks with low priority'
+          />
+        </Accordion>
       </CardContent>
       <CardFooter className='w-full py-2 flex items-center justify-between space-x-2'>
         <DeleteDialog
@@ -81,3 +116,28 @@ const PlannerCard = ({ planner, className }: PlannerCardProps) => {
 };
 
 export default PlannerCard;
+
+{
+  /* <Accordion type='single' collapsible className='space-y-2'>
+            {Object.entries(priorities).map(([priority, tasks]) => (
+              <AccordionItem key={priority} value={priority}>
+                <AccordionTrigger>
+                  <Badge
+                    variant={'outline'}
+                    className={`${mapPriortiesToColor(
+                      priority as TaskPriority
+                    )} w-full text-sm text-center`}>
+                    {priority} - {tasks.length}
+                  </Badge>
+                </AccordionTrigger>
+                <AccordionContent className='ml-4 space-y-2 max-h-1/2 overflow-y-auto'>
+                  {tasks.map((task) => (
+                    <p key={task.id} className='tuncate'>
+                      {task.name}
+                    </p>
+                  ))}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion> */
+}

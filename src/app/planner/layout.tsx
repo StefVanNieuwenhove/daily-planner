@@ -14,8 +14,6 @@ type PlannerLayoutProps = PropsWithChildren<{}>;
 const PlannerLayout = ({ children }: PlannerLayoutProps) => {
   const pathname = usePathname();
 
-  console.log(pathname.split('/').at(2));
-
   const render = pathname === '/planner';
   return (
     <>

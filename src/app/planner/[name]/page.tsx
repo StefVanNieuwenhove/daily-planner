@@ -1,18 +1,23 @@
-import { getPlannerByName } from '@/data-acces/planner';
 import { getTaksByPlanner } from '@/data-acces/task';
 import { redirect } from 'next/navigation';
 
-type PlannerIdPageProps = {
+type PlannerNamePageProps = {
   params: {
     name: string;
   };
 };
 
-const PlannerIdPage = async ({ params }: PlannerIdPageProps) => {
-  const planner = await getTaksByPlanner(params.name);
+const PlannerNamePage = async ({ params }: PlannerNamePageProps) => {
+  const tasks = await getTaksByPlanner(params.name);
 
-  if (!planner) redirect('/planner');
-  return <div>page - {params.name}</div>;
+  if (!tasks) redirect('/planner');
+  return (
+    <article>
+      {tasks.map((task) => (
+        <p key={task.id}>{task.name}</p>
+      ))}
+    </article>
+  );
 };
 
-export default PlannerIdPage;
+export default PlannerNamePage;

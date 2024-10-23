@@ -60,3 +60,35 @@ export const convertToPriority = (priority: string) => {
       return TaskPriority.LOW;
   }
 };
+
+export const mapPriortiesToColor = (priority: TaskPriority) => {
+  switch (priority) {
+    case TaskPriority.HIGH:
+      return 'bg-red-500 text-white';
+    case TaskPriority.MEDIUM:
+      return 'bg-yellow-500 text-white';
+    case TaskPriority.LOW:
+      return 'bg-green-500 text-white';
+    default:
+      return 'bg-gray-500';
+  }
+};
+
+export const mapStatusToColor = (status: TaskStatus) => {
+  switch (status) {
+    case TaskStatus.COMPLETED:
+      return 'bg-green-500 text-white';
+    case TaskStatus.IN_PROGRESS:
+      return 'bg-yellow-500 text-white';
+    case TaskStatus.PAUSED:
+      return 'bg-orange-700 text-white';
+    case TaskStatus.PLANNING:
+      return 'bg-teal-500 text-white';
+    case TaskStatus.CANCELLED:
+      return 'bg-red-500 text-white';
+    case TaskStatus.BACKLOG:
+      return 'bg-gray-500 text-white';
+    default:
+      return 'bg-gray-500';
+  }
+};

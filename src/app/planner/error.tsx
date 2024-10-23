@@ -16,8 +16,9 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className='w-full min-h-screen flex justify-center items-center'>
+    <div className='w-full min-h-screen flex flex-col justify-center items-center'>
       <h2 className='text-2xl font-semibold'>Something went wrong!</h2>
+      <p className='tuncate'>{error.message}</p>
       <Button
         onClick={
           // Attempt to recover by trying to re-render the segment
