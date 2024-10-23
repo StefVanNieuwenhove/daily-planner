@@ -16,7 +16,7 @@ datasource db {
 
 model Planner {
   id        String   @id @default(uuid())
-  name      String   @unique
+  name      String   
   userId    String @unique
   tasks     Task[]
   createdAt DateTime @default(now())

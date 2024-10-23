@@ -31,6 +31,32 @@ export const getPlanners = async (): Promise<PlannerWithTasks[] | null> => {
   }
 };
 
+export const getPlannerByName = async (
+  name: string
+): Promise<PlannerWithTasks | null> => {
+  try {
+    const user = await currentUser();
+
+    if (!user) {
+      return null;
+    }
+
+    const planner = await prisma.planner.findUnique({
+      where: {
+        name: name.toLowerCase(),
+        userId: user.id,
+      },
+      include: {
+        tasks: true,
+      },
+    });
+    return planner;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
 export const createPlanner = async ({
   name,
 }: z.infer<typeof createPlannerSchema>): Promise<FormResponse> => {

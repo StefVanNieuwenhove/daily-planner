@@ -23,8 +23,6 @@ type PlannerCardProps = {
 };
 
 const PlannerCard = ({ planner, className }: PlannerCardProps) => {
-  console.log(planner);
-
   const handleDelete = async () => {
     const response = await deletePlanner(planner.id);
 
@@ -73,7 +71,7 @@ const PlannerCard = ({ planner, className }: PlannerCardProps) => {
           }
         />
         <Button className='w-full' asChild>
-          <Link href={`/planner/${planner.id}`}>
+          <Link href={`/planner/${planner.name}`}>
             <Search className='w-4 h-4' />
           </Link>
         </Button>
